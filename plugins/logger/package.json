@@ -8,6 +8,6 @@
     "log" : "1.4.x"
   },
   "plugin": {
-    "provides": ["logger"]
+    "provides": [ "logger" ]
   }
 }
