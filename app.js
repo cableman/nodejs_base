@@ -11,7 +11,8 @@ var config = [
   },
   {
     "packagePath": "./plugins/server",
-    "port": "3000"
+    "port": "3000",
+    "path": path.join(__dirname, 'public')
   },
   {
     "packagePath": "./plugins/socket"

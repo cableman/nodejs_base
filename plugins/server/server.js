@@ -21,7 +21,17 @@ module.exports = function (options, imports, register) {
   app.use(express.favicon());
   app.use(express.urlencoded());
   app.use(express.json());
-  app.use(app.router);
+
+  // Enable route.
+  var route = options.route || false;
+  if (route) {
+    app.use(app.router);
+  }
+
+  // Set static path (absolute path in the filesystem).
+  if (options.path !== undefined) {
+    app.use(express.static(options.path));
+  }
 
   // Start the server.
   server.listen(app.get('port'), function () {
