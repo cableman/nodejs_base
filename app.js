@@ -12,6 +12,9 @@ var config = [
   {
     "packagePath": "./plugins/server",
     "port": "3000"
+  },
+  {
+    "packagePath": "./plugins/socket"
   }
 ];
 
