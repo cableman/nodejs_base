@@ -1,10 +1,10 @@
 /**
  * @file
- * Plugin to load an configuration file.
+ * Plugin to load configuration files.
  */
 
-// Required modules.
-var nconf = require('nconf');
+// Object to hold the different files loaded.
+var files = { };
 
 /**
  * Load configutation file from disk.
@@ -12,18 +12,26 @@ var nconf = require('nconf');
  * @private
  */
 function load(file) {
+  // Required modules.
+  var nconf = require('nconf');
+
+  // Override file with commandline arguments and enviroment varibles.
   nconf.argv()
        .env()
        .file({ "file": file, "search": true });
+
+  files[file] = nconf;
 }
 
 /**
  * Define the Configuration object (constructor).
  */
 var Configuration = function(file) {
+  this.files = file;
+
   // Ensure that the configutation is loaded.
   load(file);
-}
+};
 
 /**
  * Get configuration value.
@@ -35,13 +43,11 @@ var Configuration = function(file) {
  *   The value of the configuration option.
  */
 Configuration.prototype.get = function get(property) {
-  return nconf.get(property);
-}
+  return files[this.file].get(property);
+};
 
 module.exports = function (options, imports, register) {
-  var conf = new Configuration(options.filename);
-
   register(null, {
-    "configutaion": conf
+    "configutaion": Configuration;
   });
-}
+};
